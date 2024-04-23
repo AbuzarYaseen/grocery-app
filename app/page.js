@@ -4,10 +4,9 @@ import GlobalAPI from "./_utils/GlobalAPI";
 
 const page = async () => {
   const sliderList = await GlobalAPI.getSlider();
-  console.log(sliderList);
-
+  console.log("slider", sliderList);
   return (
-    <div>
+    <div className="p-10 px-16">
       <Slider sliderData={sliderList} />
     </div>
   );

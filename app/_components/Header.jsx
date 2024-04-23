@@ -22,7 +22,10 @@ const Header = () => {
   const getCategoryList = async () => {
     try {
       const res = await GlobalAPI.getAllCategories();
-      // console.log(res);
+      // console.log(
+      //   "categories thaaaaa:",
+      //   res.data.data.attributes.image.data.attributes?.url
+      // );
       setCategoryData(res.data.data);
     } catch (error) {
       console.error("category error", error);
@@ -44,24 +47,27 @@ const Header = () => {
             <DropdownMenuSeparator />
 
             {categoryData ? (
-              categoryData?.map((category, index) => (
-                <DropdownMenuItem
-                  className="hover:font-semibold cursor-pointer flex gap-2 items-center"
-                  key={category.id}
-                >
-                  <Image
-                    src={
-                      process.env.NEXT_PUBLIC_BACKEND_BASE_URL +
-                      category.attributes.image.data.attributes?.url
-                    }
-                    alt="icon"
-                    height={20}
-                    width={20}
-                    unoptimized={true}
-                  />
-                  {category.attributes.name}
-                </DropdownMenuItem>
-              ))
+              categoryData?.map((category, index) => {
+                // console.log(category);
+                return (
+                  <DropdownMenuItem
+                    className="hover:font-semibold cursor-pointer flex gap-4 items-center"
+                    key={category.id}
+                  >
+                    <Image
+                      src={
+                        process.env.NEXT_PUBLIC_BACKEND_BASE_URL +
+                        category.attributes.image.data[0].attributes?.url
+                      }
+                      alt="icon"
+                      height={25}
+                      width={25}
+                      unoptimized={true}
+                    />
+                    {category.attributes.name}
+                  </DropdownMenuItem>
+                );
+              })
             ) : (
               <div>Loading data</div>
             )}
