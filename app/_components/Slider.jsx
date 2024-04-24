@@ -14,12 +14,12 @@ const Slider = ({ sliderData }) => {
       <Carousel>
         <CarouselContent>
           {sliderData?.map((slider, index) => {
-            {
-              console.log(
-                "slider thaaaaa:",
-                slider.attributes.image.data[0].attributes?.url
-              );
-            }
+            // {
+            //   console.log(
+            //     "slider thaaaaa:",
+            //     slider.attributes.image.data[0].attributes?.url
+            //   );
+            // }
             return (
               <CarouselItem key={index}>
                 <Image
@@ -30,7 +30,7 @@ const Slider = ({ sliderData }) => {
                   width={1000}
                   height={300}
                   alt="slider"
-                  className="w-full h-[250px] object-cover rounded-2xl"
+                  className="w-full h-[170px] md:h-[300px] object-cover rounded-2xl"
                 />
               </CarouselItem>
             );
