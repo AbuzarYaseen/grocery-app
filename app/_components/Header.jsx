@@ -12,24 +12,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import GlobalAPI from "../_utils/GlobalAPI";
+import axios from "axios";
 
 const Header = () => {
   const [categoryData, setCategoryData] = useState(null);
   useEffect(() => {
-    getCategoryList();
+    categoryName();
   }, []);
 
-  const getCategoryList = async () => {
-    try {
-      const res = await GlobalAPI.getAllCategories();
-      // console.log(
-      //   "categories thaaaaa:",
-      //   res.data.data.attributes.image.data.attributes?.url
-      // );
-      setCategoryData(res.data.data);
-    } catch (error) {
-      console.error("category error", error);
-    }
+  const categoryName = () => {
+    axios
+      .get("http://localhost:1337/api/categories/?populate=*")
+      .then((response) => {
+        console.log("category", response);
+        setCategoryData(response.data.data);
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div className="p-5 shadow-sm flex justify-between">
@@ -49,6 +47,11 @@ const Header = () => {
             {categoryData ? (
               categoryData?.map((category, index) => {
                 // console.log(category);
+                // console.log(
+                //   "images thaaaaaaaaaaaaaa",
+                //   process.env.NEXT_PUBLIC_BACKEND_BASE_URL +
+                //     category.attributes.image.data[0].attributes?.url
+                // );
                 return (
                   <DropdownMenuItem
                     className="hover:font-semibold cursor-pointer flex gap-4 items-center"

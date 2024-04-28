@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Carousel,
@@ -7,19 +8,34 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
-const Slider = ({ sliderData }) => {
+const Slider = () => {
+  const [sliderData, setsliderData] = useState(null);
+  useEffect(() => {
+    getSlider();
+  }, []);
+  const getSlider = () => {
+    axios
+      .get("http://localhost:1337/api/sliders/?populate=*")
+      .then((responce) => {
+        console.log("sliderData", responce.data.data);
+        setsliderData(responce.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div>
       <Carousel>
         <CarouselContent>
           {sliderData?.map((slider, index) => {
-            // {
-            //   console.log(
-            //     "slider thaaaaa:",
-            //     slider.attributes.image.data[0].attributes?.url
-            //   );
-            // }
+            {
+              console.log(
+                "slider thaaaaa:",
+                slider.attributes.image.data[0].attributes?.url
+              );
+            }
             return (
               <CarouselItem key={index}>
                 <Image
@@ -30,7 +46,7 @@ const Slider = ({ sliderData }) => {
                   width={1000}
                   height={300}
                   alt="slider"
-                  className="w-full h-[170px] md:h-[300px] object-cover rounded-2xl"
+                  className="w-full h-[170px] md:h-[300px] object-cover rounded-3xl"
                 />
               </CarouselItem>
             );
